@@ -19,7 +19,8 @@ class SpellCheckTask
 
   start: (text) ->
     @constructor.task ?= new Task(require.resolve('./spell-check-handler'))
-    @constructor.task?.start {@id, text}, @constructor.dispatchMisspellings
+    @ignored = atom.config.get('spell-check.ignored')
+    @constructor.task?.start {@id, text, @ignored}, @constructor.dispatchMisspellings
 
   onDidSpellCheck: (callback) ->
     @constructor.callbacksById[@id] = callback
